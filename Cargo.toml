@@ -2,3 +2,8 @@
 name = "getdown"
 version = "0.1.0"
 authors = ["mikezaby <mikezaby@gmail.com>"]
+
+[dependencies]
+hyper = "0.7.2"
+rust-crypto = "0.2.34"
+rustc-serialize = "0.3.16"
