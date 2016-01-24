@@ -3,8 +3,10 @@ extern crate hyper;
 extern crate crypto;
 extern crate rustc_serialize;
 
+mod arguments;
 mod downloader;
 
+use arguments::Arguments;
 use std::fs::File;
 use std::io::BufReader;
 use std::io::prelude::*;
@@ -13,10 +15,11 @@ use threadpool::ThreadPool;
 use std::sync::mpsc;
 
 fn main() {
-    let file = File::open("input.txt").unwrap();
+    let args = Arguments::new();
+    let file = File::open(args.filename).unwrap();
     let file = BufReader::new(file);
 
-    let thread_pool = ThreadPool::new(100);
+    let thread_pool = ThreadPool::new(args.max_threads);
     let (sender, receiver) = mpsc::channel();
 
     for line in file.lines() {
