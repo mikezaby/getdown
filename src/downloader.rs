@@ -1,12 +1,12 @@
 use hyper::client::Client;
 use std::io::Read;
-use crypto::md5::Md5;
+use crypto::sha1::Sha1;
 use crypto::digest::Digest;
 use rustc_serialize::hex::ToHex;
 
-pub fn md5(url: &str) {
-    let mut hasher = Md5::new();
-    let mut hash = [0; 16];
+pub fn sha1(url: &str) -> String {
+    let mut hasher = Sha1::new();
+    let mut hash = [0; 20];
 
     let client = Client::new();
     let response = client.get(url).send().unwrap();
@@ -16,5 +16,6 @@ pub fn md5(url: &str) {
     }
 
     hasher.result(&mut hash);
-    println!("{}", hash.to_hex());
+
+    hash.to_hex()
 }
